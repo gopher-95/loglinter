@@ -49,26 +49,16 @@ func run(pass *analysis.Pass) (interface{}, error) {
 
 func isLoggerCall(pkgName, methodName string) bool {
 	switch pkgName {
-	case "log":
-		return methodName == "Print" ||
-			methodName == "Printf" ||
-			methodName == "Println" ||
-			methodName == "Fatal" ||
-			methodName == "Fatalf" ||
-			methodName == "Panic" ||
-			methodName == "Panicf"
 	case "slog":
 		return methodName == "Debug" ||
 			methodName == "Info" ||
 			methodName == "Warn" ||
 			methodName == "Error"
-	case "zap":
+	case "zap", "logger":
 		return methodName == "Debug" ||
 			methodName == "Info" ||
 			methodName == "Warn" ||
-			methodName == "Error" ||
-			methodName == "Fatal" ||
-			methodName == "Panic"
+			methodName == "Error"
 	}
 	return false
 }
@@ -92,7 +82,6 @@ func checkLogCall(pass *analysis.Pass, call *ast.CallExpr) {
 
 		checkSensitiveData(pass, lit.Pos(), message)
 
-		return
 	}
 }
 
