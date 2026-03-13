@@ -1,0 +1,12 @@
+FROM golang:1.25
+
+WORKDIR /app
+COPY . .
+
+RUN go install ./cmd/loglinter
+
+RUN cd /app/pkg/analyzer/testdata/src && \
+    go mod init testdata 2>/dev/null || true && \
+    go get go.uber.org/zap
+
+CMD ["sh", "-c", "cd /app/pkg/analyzer/testdata/src && go vet -vettool=/go/bin/loglinter ./..."]

@@ -1,0 +1,10 @@
+linters-settings:
+  custom:
+    loglinter:
+      path: /app/loglinter.so
+      description: "Линтер для проверки логов"
+      original-url: github.com/gopher-95/loglinter
+
+linters:
+  enable:
+    - loglinter
